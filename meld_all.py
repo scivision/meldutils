@@ -30,11 +30,14 @@ def meldloop(root: Path, filename: Path,
 
     si = 1 if strict else 2
 
+    filename = Path(filename).expanduser()
+    if not filename.is_file():
+        raise FileNotFoundError(filename)
+
     root = Path(root).expanduser()
     if not root.is_dir():
         raise NotADirectoryError(root)
 
-    # Not using check_call due to spurious errors
     for f in root.rglob(filename.name):
         if f.samefile(filename):
             continue
@@ -54,6 +57,7 @@ def meldloop(root: Path, filename: Path,
                 print('SKIP:', f.parent, thislangs)
                 continue
 
+        # Not using check_call due to spurious errors
         subprocess.run([exe, str(filename), str(f)])
 
         if not filecmp.cmp(f, filename, shallow=False):  # type: ignore   # mypy .pyi needs updating
