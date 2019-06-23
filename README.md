@@ -1,4 +1,4 @@
-
+[![DOI](https://zenodo.org/badge/186922933.svg)](https://zenodo.org/badge/latestdoi/186922933)
 
 [![Build Status](https://travis-ci.com/scivision/meldutils.svg?branch=master)](https://travis-ci.com/scivision/meldutils)
 [![Coverage Status](https://coveralls.io/repos/github/scivision/meldutils/badge.svg?branch=master)](https://coveralls.io/github/scivision/meldutils?branch=master)
