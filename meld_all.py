@@ -71,11 +71,6 @@ def meld_files(ref: Path, new: Path, rexe: str):
     ref = Path(ref).expanduser()
     subprocess.run([exe, str(ref), str(new)])
 
-    if not filecmp.cmp(new, ref, shallow=False):  # type: ignore   # mypy .pyi needs updating
-        logging.warning(f'{new} and {ref} do not match after Meld')
-    else:
-        print('SAME:', new.parent)
-
 
 def main():
     p = ArgumentParser()
