@@ -29,7 +29,7 @@ def files_to_meld(root: Path, ref: Path,
 
     ref = Path(ref).expanduser()
     if not ref.is_file():
-        raise FileNotFoundError(ref)
+        raise FileNotFoundError(f'specify a reference file, not a directory {ref}')
 
     root = Path(root).expanduser()
     if not root.is_dir():
@@ -57,10 +57,15 @@ def files_to_meld(root: Path, ref: Path,
         yield new
 
 
-def meld_and_check(ref: Path, new: Path, rexe: str):
+def meld_files(ref: Path, new: Path, rexe: str):
+    """
+    run file comparison program (often meld) on file pair
+    """
+
     exe = shutil.which(rexe)
     if not exe:
-        raise FileNotFoundError(f'{rexe} is not found')
+        logging.critical('File comparison program not found. Try -n option to just see which files differ.')
+        raise FileNotFoundError(rexe)
     # Not using check_call due to spurious errors
     new = Path(new).expanduser()
     ref = Path(ref).expanduser()
@@ -79,14 +84,24 @@ def main():
     p.add_argument('-l', '--language', help='language to template')
     p.add_argument('-exe', help='program to compare with', default='meld')
     p.add_argument('-s', '--strict', help='compare only with first language match', action='store_true')
+    p.add_argument('-n', '--dryrun', help='just report files that are different', action='store_true')
     p = p.parse_args()
+
+    if p.dryrun:
+        level = logging.INFO
+    else:
+        level = logging.WARNING
+    logging.basicConfig(format='%(message)s', level=level)
 
     root = Path(p.root).expanduser()
 
     files = files_to_meld(root, p.ref, p.language, strict=p.strict)
 
     for file in files:
-        meld_and_check(p.ref, file, p.exe)
+        if p.dryrun:
+            print(f'{file}  !=  {p.ref}')
+        else:
+            meld_files(p.ref, file, p.exe)
 
 
 if __name__ == '__main__':
