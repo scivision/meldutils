@@ -24,7 +24,7 @@ That terminal command invokes `meld` between `project/myfile.f90` and every othe
 Particularly on Windows, you may get Meld brought up and you don't see any difference.
 This is often because one file as a trailing \n and the other file does not, or the other file has \r\n.
 Meld won't show any difference, even with all text filters off.
-Because of how Python `filecmp.cmp` works, there isn't a blazing fast simple solution to this because using str.replace, which I didn't want to do.
+Because of how Python `filecmp.cmp` works, there isn't a blazing fast simple solution to this besides using str.replace, which I didn't want to do.
 
 So just realize it's OK, close Meld when it shows no difference and happy comparing!
 
