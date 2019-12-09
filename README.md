@@ -3,6 +3,9 @@
 [![DOI](https://zenodo.org/badge/186922933.svg)](https://zenodo.org/badge/latestdoi/186922933)
 [![Actions Status](https://github.com/scivision/meldutils/workflows/ci/badge.svg)](https://github.com/scivision/meldutils/actions)
 
+[![pypi versions](https://img.shields.io/pypi/pyversions/meldutils.svg)](https://pypi.python.org/pypi/meldutils)
+[![PyPi Download stats](http://pepy.tech/badge/meldutils)](http://pepy.tech/project/meldutils)
+
 Python scripts using
 [Meld](https://meldmerge.org)
 to accomplish tasks useful for managing large numbers of repos / projects, particularly for templates.
