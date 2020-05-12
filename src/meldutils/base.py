@@ -37,7 +37,7 @@ def files_to_meld(root: Path, ref: Path, language: str = None, strict: bool = Fa
                 logging.info(f"SKIP: {new.parent}")
                 continue
 
-            thislangs = [l[0] for l in langlist[:si]]
+            thislangs = [lang[0] for lang in langlist[:si]]
             if language not in thislangs:
                 logging.info(f"SKIP: {new.parent} {thislangs}")
                 continue
