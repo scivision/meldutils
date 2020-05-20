@@ -1,15 +1,16 @@
-# Meld Utilities
+# Graphical recursive file comparison
 
 [![DOI](https://zenodo.org/badge/186922933.svg)](https://zenodo.org/badge/latestdoi/186922933)
 [![Actions Status](https://github.com/scivision/meldutils/workflows/ci/badge.svg)](https://github.com/scivision/meldutils/actions)
-
 [![pypi versions](https://img.shields.io/pypi/pyversions/meldutils.svg)](https://pypi.python.org/pypi/meldutils)
 [![PyPi Download stats](http://pepy.tech/badge/meldutils)](http://pepy.tech/project/meldutils)
 
-Python scripts using
+Using
 [Meld](https://meldmerge.org)
-to accomplish tasks useful for managing large numbers of repos / projects, particularly for templates.
-It works on any OS Meld works on (Linux, MacOS, Windows).
+or
+[Visual Studio Code](https://code.visualstudio.com/)
+to accomplish file differencing.
+Useful for managing large numbers of repos / projects, particularly for templates.
 
 ## Scripts
 
@@ -17,14 +18,15 @@ It works on any OS Meld works on (Linux, MacOS, Windows).
 meld_all project/myfile.f90 ~/code
 ```
 
-That terminal command invokes `meld` between `project/myfile.f90` and every other file with the same name found recursively under `~/code`.
+graphically compares `project/myfile.f90` with every other file of the same name  recursively under `~/code`.
 
 ### Usage
 
-Particularly on Windows, you may get Meld brought up and you don't see any difference.
-This is often because one file as a trailing \n and the other file does not, or the other file has \r\n.
+Particularly on Windows, the GUI may be invoked, but you don't see any difference.
+This is often because only one of the two files as a trailing `\n` or `\r\n`.
 Meld won't show any difference, even with all text filters off.
-Because of how Python `filecmp.cmp` works, there isn't a blazing fast simple solution to this besides using str.replace, which I didn't want to do.
+Because of how Python `filecmp.cmp` works, there isn't a blazing fast simple solution to this.
+A possibly slow solution would be using str.replace.
 
 So just realize it's OK, close Meld when it shows no difference and happy comparing!
 

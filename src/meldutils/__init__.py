@@ -1,1 +1,1 @@
-from .base import files_to_meld, meld_files
+from .base import files_to_diff, diff_gui
