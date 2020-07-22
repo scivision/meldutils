@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-import pytest
 import os
 
 import meldutils as mu
@@ -33,7 +31,3 @@ def test_diff(gen_file):
     diff_cli = "FC.exe" if os.name == "nt" else "diff"
 
     mu.diff_gui(f1, f2, diff_cli)
-
-
-if __name__ == "__main__":
-    pytest.main([__file__])
