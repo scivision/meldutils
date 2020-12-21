@@ -30,6 +30,9 @@ def main():
     ref = Path(p.ref).expanduser().resolve()
 
     for file in mu.files_to_diff(p.root, ref):
+        if "_deps" in file.parts:
+            # CMake FetchContent (like Git submodule)
+            continue
         if p.dryrun:
             print(file, "!=", ref)
         else:
