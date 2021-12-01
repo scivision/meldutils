@@ -4,40 +4,48 @@ useful for updating templates.
 
 e.g.
 
-meld_all .appveyor.yml
+python -m meldutils .appveyor.yml
 
-meld_all .appveyor.yml -l Fortran
+python -m meldutils .appveyor.yml -l Fortran
 """
+
+from __future__ import annotations
 from pathlib import Path
 from argparse import ArgumentParser
 import meldutils as mu
 import logging
 
 
-def main():
-    p = ArgumentParser()
-    p.add_argument("ref", help="filename to compare against")
-    p.add_argument("root", help="top-level directory to search under")
-    p.add_argument("-exe", help="program to compare with")
-    p.add_argument(
-        "-n", "--dryrun", help="just report files that are different", action="store_true"
-    )
-    p = p.parse_args()
-
-    level = logging.INFO if p.dryrun else None
-    logging.basicConfig(format="%(message)s", level=level)
-
-    ref = Path(p.ref).expanduser().resolve()
-
-    for file in mu.files_to_diff(p.root, ref):
-        if "_deps" in file.parts:
-            # CMake FetchContent (like Git submodule)
-            continue
-        if p.dryrun:
-            print(file, "!=", ref)
-        else:
-            mu.diff_gui(p.ref, file, p.exe)
+def diff_if_different(ref: Path, file: Path, diff_exe: str, exclude: list[str], dryrun: bool):
+    print(file)
+    for e in exclude:
+        for p in file.parts:
+            if e in p:
+                print(f"excluded {file}")
+                return
+    if dryrun:
+        print(file, "!=", ref)
+    else:
+        mu.diff_gui(ref, file, diff_exe)
 
 
-if __name__ == "__main__":
-    main()
+p = ArgumentParser(description="compare file across directory tree")
+p.add_argument("ref", help="filename to compare against")
+p.add_argument("root", help="top-level directory to search under")
+p.add_argument("-exe", help="program to compare with", choices=["meld", "code"])
+p.add_argument("-n", "--dryrun", help="just report files that are different", action="store_true")
+p.add_argument(
+    "--exclude",
+    help="exclude folders matching this pattern",
+    nargs="+",
+    default=["_deps", "-prefix"],
+)
+P = p.parse_args()
+
+level = logging.INFO if P.dryrun else None
+logging.basicConfig(format="%(message)s", level=level)
+
+ref = Path(P.ref).expanduser().resolve()
+
+for file in mu.files_to_diff(P.root, ref):
+    diff_if_different(ref, file, diff_exe=P.exe, exclude=P.exclude, dryrun=P.dryrun)
