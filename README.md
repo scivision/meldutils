@@ -1,7 +1,6 @@
 # Graphical recursive file comparison
 
 [![DOI](https://zenodo.org/badge/186922933.svg)](https://zenodo.org/badge/latestdoi/186922933)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/scivision/meldutils.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/scivision/meldutils/context:python)
 [![Actions Status](https://github.com/scivision/meldutils/workflows/ci/badge.svg)](https://github.com/scivision/meldutils/actions)
 [![PyPi Download stats](http://pepy.tech/badge/meldutils)](http://pepy.tech/project/meldutils)
 
